@@ -1,20 +1,32 @@
+# agent.py
+
+import requests
 import os
-import openai
 from dotenv import load_dotenv
-
 load_dotenv()
-openai.api_key = os.getenv("OPENAI_API_KEY")
 
-def ask_agent(prompt):
-    response = openai.ChatCompletion.create(
-        model="gpt-4",  # ou "gpt-3.5-turbo"
-        messages=[{"role": "user", "content": prompt}]
+
+def ask_openrouter(prompt):
+    api_key = os.getenv("OPENROUTER_API_KEY")
+    headers = {
+        "Authorization": f"Bearer {api_key}",
+        "HTTP-Referer": "https://ai-agent-llm-ryfb378tiv8qw7fhb36vrv.streamlit.app/",  # remplace par ton app Streamlit publique si tu en as une
+        "Content-Type": "application/json"
+    }
+
+    body = {
+        "model": "mistralai/mistral-7b-instruct",  # ou un autre modèle disponible
+        "messages": [{"role": "user", "content": prompt}],
+    }
+
+    response = requests.post(
+        "https://openrouter.ai/api/v1/chat/completions",
+        headers=headers,
+        json=body,
     )
-    return response.choices[0].message['content'].strip()
 
-if __name__ == "__main__":
-    while True:
-        question = input("Vous: ")
-        if question.lower() in ["exit", "quit"]:
-            break
-        print("Agent:", ask_agent(question))
+    if response.status_code == 200:
+        return response.json()["choices"][0]["message"]["content"]
+    else:
+        return f"Erreur : {response.status_code} - {response.text}"
+

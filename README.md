@@ -27,6 +27,10 @@ cd ai-agent-llm
 
 
 
+
+
+
+
 ### 2. Créer et activer un environnement virtuel
 
 python -m venv llm_env
