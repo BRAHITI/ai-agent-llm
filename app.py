@@ -1,7 +1,7 @@
 import streamlit as st
 from agent import ask_openrouter  # ou colle la fonction ici
 
-st.title("Agent IA - via OpenRouter")
+st.title("Agent IA - via l'IA opensource OpenRouter")
 
 question = st.text_input("Posez votre question à l'IA :")
 
