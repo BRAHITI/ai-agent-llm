@@ -1,11 +1,10 @@
 import streamlit as st
 from agent import ask_openrouter 
 
-st.title("Agent IA - Développée par Toula et Yasser")
+st.title("Agent IA - Ma première application via l'IA opensource OpenRouter")
 
-#Ma première application via l'IA opensource OpenRouter
 
-question = st.text_input("Posez votre question, je suis là pour vous répondre, c'est Toula qui vous parle car Yasser ne parle pas :")
+question = st.text_input("Posez votre question, je suis là pour vous répondre :")
 
 if st.button("Envoyer") and question:
     response = ask_openrouter(question)
